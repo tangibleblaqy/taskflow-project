@@ -1,69 +1,125 @@
 :root{
-    background-color: rgb(40, 40, 40);
+    /*Color de todos los textos*/
     color: white;
+    
+    /*Colores*/
+    --fondo: rgb(12, 12, 12);
+    --menu: rgb(18, 18, 18);
+    
+    /*Espaciado*/
+    --padding: 16px;
+    /*Tamaños de texto*/
+    --texto: 16px;
+    --textoGrande: 48px;
+    --textoMedio: 32px;
+    --textoMini: 8px;
 }
 
 body{
-    margin: 0px;
+    margin: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+main{
+    margin: 0;
+    min-height: 90vh;
+    min-width: 100vw;
+    position: relative;
+    background-image: url(/recursos/fondomovil.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    max-width: 100%; height: auto;
+}
+
+main section{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /*Logo*/
-.logo{
-    max-height: 15vh;
-    display: flex;
-    justify-content: center;
-    font-size: 40px;
-    margin: 0px;
-    padding: 20px;
-    background-color: rgb(12, 12, 12);
+header h1{
+    margin: 0;
+    padding: var(--padding);
+    text-align: center;
+    font-size: var(--textoMedio);
+    background-color: var(--fondo);
 }
 
 /*Barra navegador*/
 .navbar{
-    max-height: 8vh;
+    margin: 0;
+    padding: 0;
+    flex: 1;
     display: flex;
     justify-content: center;
     list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    background-color: rgb(18, 18, 18);
-}
-
-.navbar :hover{
-    background-color: rgb(28, 28, 28);
+    background-color: var(--menu);
+    
 }
 
 .navbar li{
-    padding: 2vh;
-    font-size: 18px;
+    padding: var(--padding);
+    transition: 0.5s ease 0s;
 }
 
 li a{
     text-decoration: none;
     color: white;
+    font-size: var(--texto);
 }
 
-/*Texto*/
-main h2{
+.navbar :hover{
+    transform: scale(1.05);
+    background-color: rgb(28, 28, 28);
+}
+
+/*Texto principal*/
+.intro {
+    margin: 0;
     text-align: center;
+    font-size: var(--textoGrande);
 }
 
-/*Grid*/
+.intro h2{
+    margin: 0;
+}
 
+.intro p{
+    font-size: var(--textoMedio);
+}
 
 /*footer*/
 footer{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin-top: 20vh;
-    padding: 2vh;
-    background-color: rgb(18, 18, 18);
+    padding: 1vh;
+    background-color: var(--fondo);
     text-align: center;
 }
 
+/*Media queries*/
+@media (min-width: 850px) {
+    /*Cambiar imagen de fonde*/
+    main{
+        background-image: url(/recursos/fondo.png);
+        left: 25;
+    }
+    /*Barra navegador*/
+    .navbar{
+    margin: 0;
+    padding-left: 0;
+    max-width: 15vw;
+    height: 90vh;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    list-style-type: none;
+    background-color: var(--menu);
+    }  
 
+}
 
 
 
