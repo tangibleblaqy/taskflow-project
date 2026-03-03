@@ -1,0 +1,70 @@
+:root{
+    background-color: rgb(40, 40, 40);
+    color: white;
+}
+
+body{
+    margin: 0px;
+}
+
+/*Logo*/
+.logo{
+    max-height: 15vh;
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    margin: 0px;
+    padding: 20px;
+    background-color: rgb(12, 12, 12);
+}
+
+/*Barra navegador*/
+.navbar{
+    max-height: 8vh;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(18, 18, 18);
+}
+
+.navbar :hover{
+    background-color: rgb(28, 28, 28);
+}
+
+.navbar li{
+    padding: 2vh;
+    font-size: 18px;
+}
+
+li a{
+    text-decoration: none;
+    color: white;
+}
+
+/*Texto*/
+main h2{
+    text-align: center;
+}
+
+/*Grid*/
+
+
+/*footer*/
+footer{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin-top: 20vh;
+    padding: 2vh;
+    background-color: rgb(18, 18, 18);
+    text-align: center;
+}
+
+
+
+
+
+
