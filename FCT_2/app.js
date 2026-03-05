@@ -38,3 +38,5 @@ boton.addEventListener("click", (e) =>{
     crearTarea(tareaActual, tareas);
     borrarFormulario();
 })
+
+
