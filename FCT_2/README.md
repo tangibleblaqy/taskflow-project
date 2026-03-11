@@ -1,3 +1,0 @@
-Ejercicio sobre DOM y localStorage, donde se utiliza estos dos funciones de javascript para modificar el archivo HTML de manera dinamica y para almacenar los datos importantes del usuario entre sesiones.
-
-En el caso de este ejercicio se utiliza para agregar tareas creadas por el usuario guardadas en elementos HTML, mientras se guarda esos elementos en el localStorage del navegador para mantener la permanencia de datos entre sesiones. 
