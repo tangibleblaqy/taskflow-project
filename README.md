@@ -1,7 +1,10 @@
-Repo para la etapa de FCT de mi CFGS DAW
+Repositorio para la etapa de FCT de mi CFGS DAW.
 
-Carpetas:
+## Estructura por semanas
 
-FCT_1: Interfaz web simple con HTML y CSS. 
-FCT_2: Administrador de tareas con funcion de busqueda.
-FCT_3: Ejercicio número 2 pero decorado con el framework css tailwind
+- Semana_1
+  - FCT_1: Interfaz web sencilla desarrollada con HTML y CSS.
+  - FCT_2: Gestor de tareas que incluye una función de búsqueda.
+  - FCT_3: Versión del ejercicio 2 maquetada con el framework CSS Tailwind.
+- Semana_2
+  - FCT_4: Documentación y recursos relacionados con IA y herramientas de apoyo.
