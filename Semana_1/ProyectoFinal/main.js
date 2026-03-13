@@ -38,95 +38,100 @@ const borrarFormulario = () => {
 
 //funcion para crear tareas
 const crearTarea = (tarea) => {
-    const div = document.createElement("div");
-    div.className = "tarea flex flex-row items-center min-w-0 max-w-full p-1 pl-2 draggable rounded-2xl border border-[rgb(128,128,128)] m-2.5 mx-0 transition-transform duration-200 lg:hover:scale-102";
-    div.classList.add(tarea.categoria);
+  const div = document.createElement("div");
+  div.className = "tarea flex flex-row items-center min-w-0 max-w-full p-1 pl-2 draggable rounded-2xl border border-[rgb(128,128,128)] m-2.5 mx-0 transition-transform duration-200 lg:hover:scale-102";
+  div.classList.add(tarea.categoria);
 
-    const p = document.createElement("p");
-    p.textContent = tarea.valor;
-    p.dataset.valor = tarea.valor;
-    p.className = "flex-1 inline-block p-1.5 font-['Times_New_Roman'] whitespace-nowrap overflow-x-auto";
-    if (tarea.categoria === "completado"){
-      p.classList.add("line-through");
-    }
+  const p = document.createElement("p");
+  p.textContent = tarea.valor;
+  p.dataset.valor = tarea.valor;
+  p.className = "flex-1 inline-block p-1.5 font-['Times_New_Roman'] whitespace-nowrap overflow-x-auto";
+  if (tarea.categoria === "completado"){
+    p.classList.add("line-through");
+  }
 
-    const img = new Image(20, 20);
-    if (tarea.categoria === "skilling"){
-      img.src = "/recursos/Stats_icon.png"
-    } else if (tarea.categoria === "bossing"){
-      img.src = "/recursos/Multicombat.png"
-    } else if(tarea.categoria === "otro"){
-      img.src = "/recursos/Dungeon_icon.png"
-    } else {
-      img.src = "/recursos/Distraction_map_icon.png"
-    }
+  const img = new Image(20, 20);
+  if (tarea.categoria === "skilling"){
+    img.src = "/recursos/Stats_icon.png"
+  } else if (tarea.categoria === "bossing"){
+    img.src = "/recursos/Multicombat.png"
+  } else if(tarea.categoria === "otro"){
+    img.src = "/recursos/Dungeon_icon.png"
+  } else {
+    img.src = "/recursos/Distraction_map_icon.png"
+  }
 
-    const borrar = document.createElement("button");
-    borrar.textContent = "✕";
-    borrar.className = "borrar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-red-500 hover:border-red-500";
-    borrar.style.margin = "0.125rem";  
+  const borrar = document.createElement("button");
+  borrar.textContent = "✕";
+  borrar.className = "borrar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-red-500 hover:border-red-500";
+  borrar.style.margin = "0.125rem";  
 
-    //eventListener para boton de borrar
-    borrar.addEventListener("click", () => {
-      const valorP = div.querySelector("p").dataset.valor;
-      tareasGuardadas = tareasGuardadas.filter(tarea => tarea.valor !== valorP);
-      actualizarLocal();
-      div.remove();
-      mostrarInformacion();
-      actualizarEstadisticas();
-    })
-    
-    //si no esta completo
-    if(tarea.categoria !== "completado"){
+  //eventListener para boton de borrar
+  borrar.addEventListener("click", () => {
+    const valorP = div.querySelector("p").dataset.valor;
+    tareasGuardadas = tareasGuardadas.filter(tarea => tarea.valor !== valorP);
+    actualizarLocal();
+    div.remove();
+    mostrarInformacion();
+    actualizarEstadisticas();
+  })
+  
+  //si no esta completo
+  if(tarea.categoria !== "completado"){
 
-      const editar = document.createElement("button");
-      editar.textContent = "🖉";
-      editar.className = "editar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110";
-      editar.style.margin = "0.125rem";
+    const editar = document.createElement("button");
+    editar.textContent = "🖉";
+    editar.className = "editar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110";
+    editar.style.margin = "0.125rem";
 
-      //eventListener para boton de editar
-      editar.addEventListener("click", () => {
-        const valorP = prompt("¿Como se llamará la tarea?");
-        if (valorP !== null) {
-          if(valorP === ""){
-            alert("no puede estar vacío");
-            return;
-         }
-          const editar = tareasGuardadas.find(t => t.valor === p.dataset.valor);
-          if (editar) editar.valor = valorP;
-          p.textContent = valorP;
-          p.dataset.valor = valorP;
-          actualizarLocal();
-          actualizarEstadisticas();
-        }
-        return;
-      })
-
-      const completar = document.createElement("button");
-      completar.textContent = "✓";
-      completar.className = "completar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-green-500 hover:border-green-500";
-      completar.style.margin = "0.125rem";
-    
-    
-      //eventListener para boton de completar
-      completar.addEventListener("click", () => {
-        p.classList.add("line-through");
-        p.classList.add("completado");
-        const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
-        tareaTemporal.categoria = "completado";
-        const imagen = div.querySelector("img");
-        imagen.src = "/recursos/Distraction_map_icon.png?t=" + Date.now();
-        completar.remove();
-        editar.remove();
+    //eventListener para boton de editar
+    editar.addEventListener("click", () => {
+      const valorP = prompt("¿Como se llamará la tarea?");
+      if (valorP !== null) {
+        if(valorP === ""){
+          alert("no puede estar vacío");
+          return;
+       }
+        const editar = tareasGuardadas.find(t => t.valor === p.dataset.valor);
+        if (editar) editar.valor = valorP;
+        p.textContent = valorP;
+        p.dataset.valor = valorP;
         actualizarLocal();
         actualizarEstadisticas();
-        })
+      }
+      return;
+    })
 
-        div.append(img, p, borrar, editar, completar);
+    const completar = document.createElement("button");
+    completar.textContent = "✓";
+    completar.className = "completar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-green-500 hover:border-green-500";
+    completar.style.margin = "0.125rem";
+
+ 
+    //eventListener para boton de completar
+    completar.addEventListener("click", () => {
+      p.classList.add("line-through");
+      p.classList.add("completado");
+      div.classList.remove("skilling", "bossing", "otro");
+      div.classList.add("completado");
+      const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
+      tareaTemporal.categoria = "completado";
+      const imagen = div.querySelector("img");
+      imagen.src = "/recursos/Distraction_map_icon.png?t=" + Date.now();
+      completar.remove();
+      editar.remove();
+      actualizarLocal();
+      actualizarEstadisticas();
+      })
+
+      div.append(img, p, borrar, editar, completar);
   }else{
     div.append(img, p, borrar);
   }
     document.getElementById("tareas").appendChild(div);
+    if (filtroActual && !div.classList.contains(filtroActual)) {
+      div.classList.add("hidden");
+    }
 }
 
 //Marcar todo como completado
@@ -135,6 +140,9 @@ const todoCompletado = () => {
   const todoTarea = divTareas.querySelectorAll("div p");
   todoTarea.forEach((p) => {
     p.classList.add("completado", "line-through")
+    const parentDiv = p.closest("div");
+    parentDiv.classList.remove("skilling", "bossing", "otro");
+    parentDiv.classList.add("completado");
     const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
     tareaTemporal.categoria = "completado";
     actualizarLocal();
