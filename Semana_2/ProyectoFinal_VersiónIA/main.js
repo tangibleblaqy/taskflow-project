@@ -338,33 +338,48 @@ tema.addEventListener("click", () => {
   document.documentElement.classList.toggle("dark");
 })
 
-//estadisticas
+//estadisticas -- Codigo generado por IA
+const getStats = () => {
+  return tareasGuardadas.reduce(
+    (acc, tarea) => {
+      acc.total += 1;
+      if (tarea.categoria === "completado") acc.completado += 1;
+      if (tarea.categoria === "skilling") acc.skilling += 1;
+      if (tarea.categoria === "bossing") acc.bossing += 1;
+      if (tarea.categoria === "otro") acc.otro += 1;
+      return acc;
+    },
+    { total: 0, completado: 0, skilling: 0, bossing: 0, otro: 0 }
+  );
+};
+
+//funcion para actualizar las estadisticas --codigo generado por IA
 const actualizarEstadisticas = () => {
-  tareasTotales.textContent = tareasGuardadas.length;
-  tareasCompletas.textContent = tareasGuardadas.reduce((contador, tarea) => tarea.categoria === "completado" ? contador + 1 : contador, 0);
-  tareasSkilling.textContent = tareasGuardadas.reduce((contador, tarea) => tarea.categoria === "skilling" ? contador + 1 : contador, 0);
-  tareasBossing.textContent = tareasGuardadas.reduce((contador, tarea) => tarea.categoria === "bossing" ? contador + 1 : contador, 0);
-  otrasTareas.textContent = tareasGuardadas.reduce((contador, tarea) => tarea.categoria === "otro" ? contador + 1 : contador, 0);
-  felicitar();
-}
+  const s = getStats();
+  tareasTotales.textContent = s.total;
+  tareasCompletas.textContent = s.completado;
+  tareasSkilling.textContent = s.skilling;
+  tareasBossing.textContent = s.bossing;
+  otrasTareas.textContent = s.otro;
+  felicitar(s);
+};
 
-//felicitar
-const felicitar = () => {
-  if (tareasTotales.textContent === tareasCompletas.textContent){
-    const textoFelicitacion = document.getElementById("textoFelicitacion");
-    const baile = document.getElementById("baile");
-    textoFelicitacion.classList.remove("hidden");
-    baile.classList.remove("hidden");
-  } else{
-    textoFelicitacion.classList.add("hidden");
-    baile.classList.add("hidden");
-  }
-}
 
+//funcion para mostrar mensaje de felicitacion si todas las tareas estan completadas --codigo generado por IA
+const felicitar = ({ total, completado }) => {
+  const textoFelicitacion = document.getElementById("textoFelicitacion");
+  const baile = document.getElementById("baile");
+  const estaFelicitado = total > 0 && total === completado;
+  textoFelicitacion.classList.toggle("hidden", !estaFelicitado);
+  baile.classList.toggle("hidden", !estaFelicitado);
+};
+
+
+//codigo generado por IA
 const normalizarTexto = (texto) => texto.trim().toLowerCase();
 
 const matchesSearch = (tareaTexto, filtro) =>
   normalizarTexto(tareaTexto).includes(normalizarTexto(filtro));
-
+//fin de codigo generado por IA
 
 
