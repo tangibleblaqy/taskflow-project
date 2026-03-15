@@ -179,25 +179,30 @@ const crearTarea = (tarea) => {
   if (filtroActual && !div.classList.contains(filtroActual)) div.classList.add("hidden");
 }
 
-//Marcar todo como completado
-const todoCompletado = () => {  
-  const divTareas = document.getElementById("tareas");
-  const todoTarea = divTareas.querySelectorAll("div p");
-  todoTarea.forEach((p) => {
-    p.classList.add("completado", "line-through")
-    const parentDiv = p.closest("div");
-    parentDiv.classList.remove("skilling", "bossing", "otro");
-    parentDiv.classList.add("completado");
-    const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
-    tareaTemporal.categoria = "completado";
-    actualizarLocal();
+//Marcar todo como completado -- Codigo modificado por IA
+const todoCompletado = () => {
+  if (!tareasGuardadas.length) return;
+  tareasGuardadas = tareasGuardadas.map(t => ({ ...t, categoria: "completado" }));
+
+  const tarjetas = tareas.querySelectorAll(".tarea");
+  tarjetas.forEach(div => {
+    const p = div.querySelector("p");
+    p.classList.add("completado", "line-through");
+    div.classList.remove("skilling","bossing","otro");
+    div.classList.add("completado");
+
+    const img = div.querySelector("img");
+    if (img) img.src = getTaskIconSrc("completado") + "?t=" + Date.now();
+
+    const editarBtn = div.querySelector(".editar");
+    const completarBtn = div.querySelector(".completar");
+    if (editarBtn) editarBtn.remove();
+    if (completarBtn) completarBtn.remove();
   });
-  const imagen = divTareas.querySelectorAll("img");
-  imagen.forEach((img) => {
-    img.src = "/recursos/Distraction_map_icon.png?t=" + Date.now()
-    divTareas.querySelectorAll("div button:nth-child(4), div button:nth-child(5)").forEach(boton => boton.remove());;
-  })
-}
+
+  actualizarLocal();
+  actualizarEstadisticas();
+};
 
 completarTodo.addEventListener("click", () =>{
   todoCompletado();
