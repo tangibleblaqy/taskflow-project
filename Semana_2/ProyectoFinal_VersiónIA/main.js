@@ -228,19 +228,22 @@ borrarTodo.addEventListener("click", () =>{
 
 //funcion para buscar tarea
 const buscarTarea = () => {
-    const valorBuscador = buscador.value;
-    document.querySelectorAll(".tarea").forEach(div => {
+  const q = normalizarTexto(buscador.value);
+  document.querySelectorAll(".tarea").forEach(div => {
     const p = div.querySelector("p");
-    const tarea = p.textContent.toLowerCase();
-    
-    //presentacion de la tarea
-    if (tarea.includes(valorBuscador)) {
-      div.classList.remove("hidden");
-    } else {
-      div.classList.add("hidden");;
-    }
-  })
-}
+    div.classList.toggle("hidden", !matchesSearch(p.textContent, q));
+  });
+};
+
+const debounce = (fn, ms = 150) => {
+  let id;
+  return (...args) => {
+    clearTimeout(id);
+    id = setTimeout(() => fn(...args), ms);
+  };
+};
+
+buscador.addEventListener("input", debounce(buscarTarea, 150));
 
 //filtrar por categoria
 let filtroActual = null;
@@ -281,9 +284,6 @@ bossing.addEventListener("click", () =>{
 otro.addEventListener("click", () =>{
   activarBoton(otro, "otro");
 })
-
-//Buscador
-buscador.addEventListener("input", (buscarTarea));
 
 //Crear tarea
 boton.addEventListener("click", (e) =>{
@@ -360,6 +360,11 @@ const felicitar = () => {
     baile.classList.add("hidden");
   }
 }
+
+const normalizarTexto = (texto) => texto.trim().toLowerCase();
+
+const matchesSearch = (tareaTexto, filtro) =>
+  normalizarTexto(tareaTexto).includes(normalizarTexto(filtro));
 
 
 
