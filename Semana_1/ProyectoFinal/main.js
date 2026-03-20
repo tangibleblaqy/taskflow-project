@@ -1,6 +1,5 @@
 let tareasGuardadas = [];
-
-const boton = document.getElementById("boton");
+const formularioTarea = document.getElementById("formularioTarea");
 const buscador = document.getElementById("buscador");
 const creador = document.getElementById("creador");
 const tipo = document.getElementById("tipo");
@@ -39,7 +38,7 @@ const borrarFormulario = () => {
 //funcion para crear tareas
 const crearTarea = (tarea) => {
   const div = document.createElement("div");
-  div.className = "tarea flex flex-row items-center min-w-0 max-w-full p-1 pl-2 draggable rounded-2xl border border-[rgb(128,128,128)] m-2.5 mx-0 transition-transform duration-200 lg:hover:scale-102";
+  div.className = "tarea flex flex-row items-center max-w-full p-1 pl-2 draggable rounded-2xl border border-[rgb(128,128,128)] m-2.5 mx-0 transition-transform duration-200 lg:hover:scale-102";
   div.classList.add(tarea.categoria);
 
   const p = document.createElement("p");
@@ -63,7 +62,7 @@ const crearTarea = (tarea) => {
 
   const borrar = document.createElement("button");
   borrar.textContent = "✕";
-  borrar.className = "borrar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-red-500 hover:border-red-500";
+  borrar.className = "borrar border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:bg-red-500 hover:border-red-500";
   borrar.style.margin = "0.125rem";  
 
   //eventListener para boton de borrar
@@ -81,12 +80,12 @@ const crearTarea = (tarea) => {
 
     const editar = document.createElement("button");
     editar.textContent = "🖉";
-    editar.className = "editar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110";
+    editar.className = "editar border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200";
     editar.style.margin = "0.125rem";
 
     //eventListener para boton de editar
     editar.addEventListener("click", () => {
-      const valorP = prompt("¿Como se llamará la tarea?");
+      const valorP = prompt("Editar tarea:", p.textContent);
       if (valorP !== null) {
         if(valorP === ""){
           alert("no puede estar vacío");
@@ -104,7 +103,7 @@ const crearTarea = (tarea) => {
 
     const completar = document.createElement("button");
     completar.textContent = "✓";
-    completar.className = "completar cursor-pointer border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:scale-110 hover:bg-green-500 hover:border-green-500";
+    completar.className = "completar border border-[rgb(128,128,128)] rounded-2xl w-7 h-7 transition-transform duration-200 hover:bg-green-500 hover:border-green-500";
     completar.style.margin = "0.125rem";
 
  
@@ -136,22 +135,25 @@ const crearTarea = (tarea) => {
 
 //Marcar todo como completado
 const todoCompletado = () => {  
-  const divTareas = document.getElementById("tareas");
-  const todoTarea = divTareas.querySelectorAll("div p");
-  todoTarea.forEach((p) => {
-    p.classList.add("completado", "line-through")
-    const parentDiv = p.closest("div");
-    parentDiv.classList.remove("skilling", "bossing", "otro");
-    parentDiv.classList.add("completado");
-    const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
-    tareaTemporal.categoria = "completado";
-    actualizarLocal();
-  });
-  const imagen = divTareas.querySelectorAll("img");
-  imagen.forEach((img) => {
-    img.src = "/recursos/Distraction_map_icon.png?t=" + Date.now()
-    divTareas.querySelectorAll("div button:nth-child(4), div button:nth-child(5)").forEach(boton => boton.remove());;
-  })
+  const respuesta = confirm("¿Estás seguro de que quieres marcar todas las tareas como completadas?");
+  if (respuesta) {
+      const divTareas = document.getElementById("tareas");
+      const todoTarea = divTareas.querySelectorAll("div p");
+      todoTarea.forEach((p) => {
+      p.classList.add("completado", "line-through")
+      const parentDiv = p.closest("div");
+      parentDiv.classList.remove("skilling", "bossing", "otro");
+      parentDiv.classList.add("completado");
+      const tareaTemporal = tareasGuardadas.find(tarea => tarea.valor === p.textContent);
+      tareaTemporal.categoria = "completado";
+      actualizarLocal();
+    });
+    const imagen = divTareas.querySelectorAll("img");
+    imagen.forEach((img) => {
+      img.src = "/recursos/Distraction_map_icon.png?t=" + Date.now()
+      divTareas.querySelectorAll("div button:nth-child(4), div button:nth-child(5)").forEach(boton => boton.remove());;
+    })
+  }
 }
 
 completarTodo.addEventListener("click", () =>{
@@ -161,15 +163,18 @@ completarTodo.addEventListener("click", () =>{
 
 //borrar todo completado:
 const borrarCompletado = () => {
-  const divTareas = document.getElementById("tareas");
-  divTareas.querySelectorAll(".completado").forEach(tarea =>{
-    const valorP = tarea.dataset.valor;
-    tareasGuardadas = tareasGuardadas.filter(t => t.valor !== valorP);
-    tarea.parentElement.remove();
-    actualizarLocal();
-  })
-  mostrarInformacion();
-  actualizarEstadisticas();
+  const respuesta = confirm("¿Estás seguro de que quieres borrar todas las tareas completadas?");  
+  if (respuesta) {
+    const divTareas = document.getElementById("tareas");
+      divTareas.querySelectorAll(".completado").forEach(tarea =>{
+      const valorP = tarea.dataset.valor;
+      tareasGuardadas = tareasGuardadas.filter(t => t.valor !== valorP);
+      tarea.parentElement.remove();
+      actualizarLocal();
+    })
+    mostrarInformacion();
+    actualizarEstadisticas();
+  }
 }
 
 borrarTodo.addEventListener("click", () =>{
@@ -209,9 +214,9 @@ const filtrarTareas = (categoria) => {
 
 const activarBoton = (boton, categoria) => {
   filtroActual = filtroActual === categoria ? null : categoria;
-  botones.forEach(b => b.classList.remove("scale-110", "bg-[#C0A786]"));
+  botones.forEach(b => b.classList.remove("elegido"));
   if (filtroActual) {
-    boton.classList.add("scale-110", "bg-[#C0A786]");
+    boton.classList.add("elegido");
   }
   filtrarTareas(filtroActual);
 }
@@ -236,7 +241,7 @@ otro.addEventListener("click", () =>{
 buscador.addEventListener("input", (buscarTarea));
 
 //Crear tarea
-boton.addEventListener("click", (e) =>{
+formularioTarea.addEventListener("submit", (e) =>{
     e.preventDefault();
     
     const tareaTemporal = {categoria: tipo.value, valor: creador.value};

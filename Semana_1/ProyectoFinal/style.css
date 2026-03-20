@@ -1,14 +1,114 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
-* {
-  -webkit-font-smoothing: antialiased;
-  border-style: solid;
+:root{
+  /*Fondo*/
+  --colorFondoPrincipalClaro: #E2DBC8;
+  --colorFondoPrincipalOscuro: #28221D;
+  --colorFondoSecundarioClaro: #C0A786;
+  --colorFondoSecundarioOscuro: #1B1612;
+
+  /*Texto*/
+  --colorTextoClaro: black;
+  --colorTextoOscuro: #F4EAEA;
+  --fuentePrincipal: 'Times New Roman', serif;
+  
+  --textoGrande: 3rem;
+  --textoMediano: 1.5rem;
+  --textoPequeno: 1rem;
+
+  /*Borde*/
+  --bordeClaro: black;
+  --bordeOscuro: rgb(128,128,128);
+
+  /**/
 }
 
-#tareas {
-  flex-wrap: wrap;
-} 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
+.dark{
+  background-color: var(--colorFondoPrincipalOscuro);
+  color: var(--colorTextoOscuro);
+  border: var(--bordeOscuro);
+}
 
+html{
+  font-size: 1rem;
+  background-color: var(--colorFondoPrincipalClaro);
+  font-family: var(--fuentePrincipal);
+  border: var(--bordeClaro);
+  
+}
 
+header{
+  background-color: var(--colorFondoSecundarioClaro)
+}
+
+.dark header{
+  background-color: var(--colorFondoSecundarioOscuro);
+}
+
+button{
+  cursor: pointer;
+}
+
+a{
+  text-decoration: none;
+
+  :any-link{
+    color: #896E52;
+  }
+
+  :hover{
+    text-decoration: underline;
+  }
+}
+
+footer{
+  background-color: var(--colorFondoSecundarioClaro);
+  color: var(--colorTextoClaro);
+  text-align: center;
+}
+
+.dark footer{
+  background-color: var(--colorFondoSecundarioOscuro);
+  color: var(--colorTextoOscuro);
+}
+
+.elegido{
+  scale: 1.10;
+  background-color: var(--colorFondoSecundarioClaro);
+  border-color: var(--bordeClaro);
+}
+
+.borderOSRS{
+  color:var(--colorTextoOscuro);
+  background-color: #3E3529;
+  border-width: 10px;
+  border-style: solid;
+  border-image: url(/recursos/Inventory_tab.png);
+  border-image-slice: 10;
+  border-image-repeat: stretch;
+  :hover{
+    
+  }
+}
+
+.tema{
+  
+}
+
+.transition{
+  transition-property: all;
+  transition-duration: 200ms;
+}
+
+@media  (min-width: 768px) {
+    
+  .crearBuscar{
+    flex-direction: row;
+    justify-content: center;
+  }
+}
